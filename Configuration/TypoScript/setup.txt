@@ -1,0 +1,12 @@
+
+ # Module configuration
+module.tx_locallangtools_user_locallangtoolslocallang {
+	persistence {
+		storagePid = {$module.tx_locallangtools_locallang.persistence.storagePid}
+	}
+	view {
+		templateRootPaths.0 = {$module.tx_locallangtools_locallang.view.templateRootPath}
+		partialRootPaths.0 = {$module.tx_locallangtools_locallang.view.partialRootPath}
+		layoutRootPaths.0 = {$module.tx_locallangtools_locallang.view.layoutRootPath}
+	}
+}

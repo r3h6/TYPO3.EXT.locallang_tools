@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2016-02-17T19:11:55Z" product-name="locallang_tools">
+		<header/>
+		<body>
+			<trans-unit id="tx_locallangtools_key.description">
+				<source>key</source>
+			</trans-unit>
+			<trans-unit id="source.description">
+				<source>source</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
