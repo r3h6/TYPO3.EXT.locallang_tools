@@ -72,10 +72,10 @@
                     "controllerActionCombinations": "Translation=>list,update,delete"
                 },
                 "description": "Locallang translation tool",
-                "key": "locallang",
+                "key": "translation",
                 "mainModule": "user",
-                "name": "Locallang",
-                "tabLabel": "Locallang"
+                "name": "Translation",
+                "tabLabel": "Translation"
             }
         ],
         "description": "Locallang tools",
@@ -112,7 +112,7 @@
 
     ],
     "log": {
-        "last_modified": "2016-02-17 07:19",
+        "last_modified": "2016-02-17 07:27",
         "extension_builder_version": "7.6.0",
         "be_user": " (1)"
     }
