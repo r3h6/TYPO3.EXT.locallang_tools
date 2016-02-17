@@ -1,6 +1,8 @@
 <?php
 namespace R3H6\LocallangTools\Domain\Repository;
 
+use TYPO3\CMS\Core\Utility\PathUtility;
+
 /***************************************************************
  *
  *  Copyright notice
@@ -29,8 +31,26 @@ namespace R3H6\LocallangTools\Domain\Repository;
 /**
  * The repository for Locallangs
  */
-class TranslationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
+class TranslationRepository
 {
 
+    public function findAll()
+    {
+        $files = $this->findLocallangFiles();
+    }
     
+    protected function findLocallangFiles()
+    {
+        $extensionPaths = array('typo3conf/ext/', 'typo3/sysext/');
+        $files = array();
+        // Traverse extension locations:
+        foreach ($extensionPaths as $path) {
+            $path = GeneralUtility::getFileAbsFileName(PathUtility::sanitizeTrailingSeparator($path));
+            if (is_dir($path)) {
+                $files = array_merge($files, GeneralUtility::getAllFilesAndFoldersInPath(array(), $path, 'xml,xlf', false, 99, 'Tests'));
+            }
+        }
+        return $files;
+    }
+
 }

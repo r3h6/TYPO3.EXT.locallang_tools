@@ -93,8 +93,8 @@
         },
         "extensionKey": "locallang_tools",
         "name": "Locallang tools",
-        "originalExtensionKey": "",
-        "originalVendorName": "",
+        "originalExtensionKey": "locallang_tools",
+        "originalVendorName": "R3H6",
         "persons": [
             {
                 "company": "",
@@ -112,7 +112,7 @@
 
     ],
     "log": {
-        "last_modified": "2016-02-17 07:27",
+        "last_modified": "2016-02-17 07:46",
         "extension_builder_version": "7.6.0",
         "be_user": " (1)"
     }

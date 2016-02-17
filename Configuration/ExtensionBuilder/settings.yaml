@@ -60,13 +60,13 @@ overwriteSettings:
 
 #  ext_localconf.php: merge
 
-  ext_tables.php: keep
+#  ext_tables.php: keep
 
 #  ext_tables.sql: merge
 
-  ext_typoscript_constants: keep
+  ext_typoscript_constants.txt: keep
 
-  ext_typoscript_setup: keep
+  ext_typoscript_setup.txt: keep
 
 ## use static date attribute in xliff files ##
 #staticDateInXliffFiles: 2016-02-17T19:10:00Z
