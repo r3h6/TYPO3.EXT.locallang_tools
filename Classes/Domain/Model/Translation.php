@@ -29,8 +29,20 @@ namespace R3H6\LocallangTools\Domain\Model;
 /**
  * Locallang
  */
-class Translation extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class Translation
 {
+
+    const STATE_TRANSLATED = 'translated';
+    const STATE_NEEDS_TRANSLATION = 'needs-translation';
+    const STATE_NEEDS_REVIEW_TRANSLATION = 'needs-review-translation';
+
+    /**
+     * file
+     *
+     * @var string
+     */
+    protected $file = '';
+
 
     /**
      * key
@@ -38,14 +50,65 @@ class Translation extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var string
      */
     protected $key = '';
-    
+
+    /**
+     * language
+     *
+     * @var string
+     */
+    protected $language = '';
+
     /**
      * source
      *
      * @var string
      */
-    protected $source = '';
-    
+    protected $source;
+
+    /**
+     * target
+     *
+     * @var string
+     */
+    protected $target;
+
+    /**
+     * default source
+     *
+     * @var string
+     */
+    protected $default;
+
+    public function __construct($file, $key, $language, $default, $source, $target)
+    {
+        $this->file = $file;
+        $this->key = $key;
+        $this->language = $language;
+        $this->default = $default;
+        $this->source = $source;
+        $this->target = $target;
+    }
+
+    /**
+     * Get file
+     *
+     * @return string
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * Set file
+     *
+     * @param string $file
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
+    }
+
     /**
      * Returns the key
      *
@@ -55,7 +118,7 @@ class Translation extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         return $this->key;
     }
-    
+
     /**
      * Sets the key
      *
@@ -66,7 +129,67 @@ class Translation extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->key = $key;
     }
-    
+
+    /**
+     * Get langauge
+     *
+     * @return string
+     */
+    public function getLangauge()
+    {
+        return $this->langauge;
+    }
+
+    /**
+     * Set langauge
+     *
+     * @param string $langauge
+     */
+    public function setLangauge($langauge)
+    {
+        $this->langauge = $langauge;
+    }
+
+    /**
+     * Get default
+     *
+     * @return string
+     */
+    public function getDefault()
+    {
+        return $this->default;
+    }
+
+    /**
+     * Set default
+     *
+     * @param string $default
+     */
+    public function setDefault($default)
+    {
+        $this->default = $default;
+    }
+
+    /**
+     * Get target
+     *
+     * @return string
+     */
+    public function getTarget()
+    {
+        return $this->target;
+    }
+
+    /**
+     * Set target
+     *
+     * @param string $target
+     */
+    public function setTarget($target)
+    {
+        $this->target = $target;
+    }
+
     /**
      * Returns the source
      *
@@ -76,7 +199,7 @@ class Translation extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         return $this->source;
     }
-    
+
     /**
      * Sets the source
      *
@@ -88,4 +211,18 @@ class Translation extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->source = $source;
     }
 
+    /**
+     * Get state
+     *
+     * @return  string
+     */
+    public function getState()
+    {
+        if (empty($this->target)) {
+            return self::STATE_NEEDS_TRANSLATION;
+        } elseif ($this->source !== $this->default) {
+            return self::STATE_NEEDS_REVIEW_TRANSLATION;
+        }
+        return self::STATE_TRANSLATED;
+    }
 }

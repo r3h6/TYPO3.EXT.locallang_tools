@@ -1,39 +1,52 @@
 
 <f:layout name="Default" />
 
-This Template is responsible for creating a table of domain objects.
-
-If you modify this template, do not forget to change the overwrite settings
-in /Configuration/ExtensionBuilder/settings.yaml:
-  Resources:
-    Private:
-      Templates:
-        List.html: keep
-
-Otherwise your changes will be overwritten the next time you save the extension in the extension builder
 
 <f:section name="content">
 <h1>Listing for Translation</h1>
 
+<f:form class="form" action="list" name="translationDemand" object="{translationDemand}" enctype="multipart/form-data">
+    <div class="form-group">
+      <label class="form-label"><f:translate key="tx_locallangtools_domain_model_dto_translationdemand.search" /></label>
+      <f:form.textfield property="search" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label class="form-label"><f:translate key="tx_locallangtools_domain_model_dto_translationdemand.key" /></label>
+      <f:form.textfield property="key" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label class="form-label"><f:translate key="tx_locallangtools_domain_model_dto_translationdemand.language" /></label>
+      <f:form.select property="language" options="{translationDemand.languageOptions}" optionValueField="language_isocode" optionLabelField="title" multiple="multiple" />
+    </div>
+    <div class="form-group">
+      <label class="form-label"><f:translate key="tx_locallangtools_domain_model_dto_translationdemand.extensions" /></label>
+      <f:form.select property="extensions" options="{translationDemand.extensionsOptions}" optionValueField="key" optionLabelField="title" multiple="multiple" />
+    </div>
+    <div class="form-group">
+      <label class="form-label"><f:translate key="tx_locallangtools_domain_model_dto_translationdemand.files" /></label>
+      <f:form.select property="files" options="{translationDemand.filesOptions}" multiple="multiple" />
+    </div>
+    <div class="form-group">
+      <button class="btn btn-default"><f:translate key="button.submit" /></button>
+    </div>
+</f:form>
+
+
 <f:flashMessages />
+<table  class="table table-stripped" >
+  <tr>
+    <th><f:translate key="tx_locallangtools_domain_model_translation.key" /></th>
+    <th><f:translate key="tx_locallangtools_domain_model_translation.default" /></th>
+    <th><f:translate key="tx_locallangtools_domain_model_translation.target" /></th>
+  </tr>
 
-<table  class="tx_locallangtools" >
-	<tr>
-		<th><f:translate key="tx_locallangtools_domain_model_translation.tx_locallangtools_key" /></th>
-		<th><f:translate key="tx_locallangtools_domain_model_translation.source" /></th>
-		<th> </th>
-		<th> </th>
-	</tr>
-
-	<f:for each="{translations}" as="translation">
-		<tr>
-			<td><f:link.action action="show" arguments="{translation : translation}"> {translation.key}</f:link.action></td>
-			<td><f:link.action action="show" arguments="{translation : translation}"> {translation.source}</f:link.action></td>
-			<td><f:link.action action="edit" arguments="{translation : translation}">Edit</f:link.action></td>
-			<td><f:link.action action="delete" arguments="{translation : translation}">Delete</f:link.action></td>
-		</tr>
-	</f:for>
+  <f:for each="{translations}" as="translation">
+    <tr class="state-{translation.state}">
+      <td>{translation.key}</td>
+      <td>{translation.default}</td>
+      <td>{translation.target}</td>
+    </tr>
+  </f:for>
 </table>
 
-<f:link.action action="new">New Translation</f:link.action>
 </f:section>

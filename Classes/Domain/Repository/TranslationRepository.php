@@ -1,8 +1,6 @@
 <?php
 namespace R3H6\LocallangTools\Domain\Repository;
 
-use TYPO3\CMS\Core\Utility\PathUtility;
-
 /***************************************************************
  *
  *  Copyright notice
@@ -28,29 +26,76 @@ use TYPO3\CMS\Core\Utility\PathUtility;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use R3H6\LocallangTools\Localization\LocalizationFactory;
+use R3H6\LocallangTools\Utility\PathUtility;
+use R3H6\LocallangTools\Domain\Model\Translation;
+use R3H6\LocallangTools\Domain\Model\Dto\TranslationDemand;
+
 /**
  * The repository for Locallangs
  */
-class TranslationRepository
+class TranslationRepository implements \TYPO3\CMS\Core\SingletonInterface
 {
+    const DEFAULT_LANGUAGE = 'default';
 
-    public function findAll()
+    /**
+     * @var R3H6\LocallangTools\Localization\LocalizationFactory
+     * @inject
+     */
+    protected $localizationFactory = null;
+
+
+    /**
+     * @var R3H6\LocallangTools\Domain\TranslationFactory
+     * @inject
+     */
+    protected $translationFactory = null;
+
+    /**
+     * [findDemanded description]
+     * @param  R3H6\LocallangTools\Domain\Model\Dto\TranslationDemand $demand [description]
+     * @return TYPO3\CMS\Extbase\Persistence\ObjectStorage<R3H6\LocallangTools\Domain\Model\Translation>
+     */
+    public function findDemanded(TranslationDemand $demand)
     {
-        $files = $this->findLocallangFiles();
-    }
-    
-    protected function findLocallangFiles()
-    {
-        $extensionPaths = array('typo3conf/ext/', 'typo3/sysext/');
-        $files = array();
-        // Traverse extension locations:
-        foreach ($extensionPaths as $path) {
-            $path = GeneralUtility::getFileAbsFileName(PathUtility::sanitizeTrailingSeparator($path));
-            if (is_dir($path)) {
-                $files = array_merge($files, GeneralUtility::getAllFilesAndFoldersInPath(array(), $path, 'xml,xlf', false, 99, 'Tests'));
+        $demand->setLanguage('de');
+        $translations = new ObjectStorage();
+
+        $files = (array) $demand->getFiles();
+        if (empty($files)) {
+            $files = PathUtility::getLocallangPaths();
+        }
+
+        $language = $demand->getLanguage();
+        if (empty($language)) {
+            $language = self::DEFAULT_LANGUAGE;
+        }
+
+        foreach ($files as $file) {
+            $file = PathUtility::getAbsolutePath($file);
+            $parsedData = $this->localizationFactory->getParsedData($file, $language, LocalizationFactory::CHARSET, LocalizationFactory::ERROR_MODE_EXCEPTION);
+            foreach ($parsedData[self::DEFAULT_LANGUAGE] as $key => $value) {
+                $default = $value[0]['source'];
+                $source = isset($parsedData[$language][$key][0]['source']) ? $parsedData[$language][$key][0]['source']: null;
+                $target = isset($parsedData[$language][$key][0]['target']) ? $parsedData[$language][$key][0]['target']: null;
+
+                $translation = GeneralUtility::makeInstance(Translation::class, $file, $key, $language, $default, $source, $target);
+
+                if ($demand->getState() && $demand->getState() !== $translation->getState()) {
+                    continue;
+                }
+                if ($demand->getKey() && stripos($translation->getKey(), $demand->getKey()) === false) {
+                    continue;
+                }
+                if ($demand->getSearch() && stripos($translation->getTarget(), $demand->getSearch()) === false && stripos($translation->getSource(), $demand->getSearch()) === false) {
+                    continue;
+                }
+
+                $translations->attach($translation);
             }
         }
-        return $files;
+        return $translations;
     }
-
 }

@@ -26,6 +26,8 @@ namespace R3H6\LocallangTools\Controller;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use R3H6\LocallangTools\Domain\Model\Dto\TranslationDemand;
+
 /**
  * TranslationController
  */
@@ -38,20 +40,24 @@ class TranslationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
      * @var \R3H6\LocallangTools\Domain\Repository\TranslationRepository
      * @inject
      */
-    protected $translationRepository = NULL;
-    
+    protected $translationRepository = null;
+
     /**
      * action list
      *
-     * @param R3H6\TranslationTools\Domain\Model\Translation
+     * @param R3H6\LocallangTools\Domain\Model\Dto\TranslationDemand $translationDemand
      * @return void
      */
-    public function listAction()
+    public function listAction(TranslationDemand $translationDemand = null)
     {
-        $locallangs = $this->locallangRepository->findAll();
-        $this->view->assign('locallangs', $locallangs);
+        if ($translationDemand === null) {
+            $translationDemand = $this->objectManager->get(TranslationDemand::class);
+        }
+        $translations = $this->translationRepository->findDemanded($translationDemand);
+        $this->view->assign('translations', $translations);
+        $this->view->assign('translationDemand', $translationDemand);
     }
-    
+
     /**
      * action delete
      *
@@ -64,7 +70,7 @@ class TranslationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
         $this->locallangRepository->remove($locallang);
         $this->redirect('list');
     }
-    
+
     /**
      * action update
      *

@@ -21,6 +21,24 @@
 			<trans-unit id="tx_locallangtools_domain_model_locallang.source">
 				<source>Source</source>
 			</trans-unit>
+			<trans-unit id="tx_locallangtools_domain_model_dto_translationdemand.search" approved="yes">
+				<source>Search</source>
+			</trans-unit>
+			<trans-unit id="tx_locallangtools_domain_model_dto_translationdemand.key" approved="yes">
+				<source>Key</source>
+			</trans-unit>
+			<trans-unit id="tx_locallangtools_domain_model_dto_translationdemand.language" approved="yes">
+				<source>Language</source>
+			</trans-unit>
+			<trans-unit id="tx_locallangtools_domain_model_dto_translationdemand.extensions" approved="yes">
+				<source>Extensions</source>
+			</trans-unit>
+			<trans-unit id="tx_locallangtools_domain_model_dto_translationdemand.files" approved="yes">
+				<source>Files</source>
+			</trans-unit>
+			<trans-unit id="button.submit" approved="yes">
+				<source>Submit</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
