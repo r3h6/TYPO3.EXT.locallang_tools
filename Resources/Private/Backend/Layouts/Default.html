@@ -1,5 +1,15 @@
 
-<f:be.container>
+<f:be.container
+	loadJQuery="true"
+	jQueryNamespace="jQuery"
+	includeCssFiles="{
+		0: '{f:uri.resource(path: \'StyleSheets/Translation.css\')}'
+	}"
+
+	includeRequireJsModules="{
+		0: '{f:uri.resource(path: \'JavaScripts/Translation.js\')}'
+	}"
+>
 	<div class="typo3-fullDoc">
 		<div id="typo3-docheader">
 			<div class="typo3-docheader-functions">

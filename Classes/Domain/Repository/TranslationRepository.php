@@ -64,7 +64,13 @@ class TranslationRepository implements \TYPO3\CMS\Core\SingletonInterface
         $translations = new ObjectStorage();
 
         $files = (array) $demand->getFiles();
-        if (empty($files)) {
+        if ($demand->getExtensions()) {
+            $extensionPaths = [];
+            foreach ($demand->getExtensions() as $extensionKey) {
+                $extensionPaths[] = 'EXT:' . $extensionKey;
+            }
+            $files = $files + PathUtility::getLocallangPaths($extensionPaths);
+        } elseif (empty($files)) {
             $files = PathUtility::getLocallangPaths();
         }
 
@@ -72,10 +78,9 @@ class TranslationRepository implements \TYPO3\CMS\Core\SingletonInterface
         if (empty($language)) {
             $language = self::DEFAULT_LANGUAGE;
         }
-
         foreach ($files as $file) {
-            $file = PathUtility::getAbsolutePath($file);
-            $parsedData = $this->localizationFactory->getParsedData($file, $language, LocalizationFactory::CHARSET, LocalizationFactory::ERROR_MODE_EXCEPTION);
+            $filePath = PathUtility::getAbsolutePath($file);
+            $parsedData = $this->localizationFactory->getParsedData($filePath, $language, LocalizationFactory::CHARSET, LocalizationFactory::ERROR_MODE_EXCEPTION);
             foreach ($parsedData[self::DEFAULT_LANGUAGE] as $key => $value) {
                 $default = $value[0]['source'];
                 $source = isset($parsedData[$language][$key][0]['source']) ? $parsedData[$language][$key][0]['source']: null;

@@ -6,20 +6,23 @@
 			<trans-unit id="tx_locallangtools_domain_model_translation">
 				<source>Translation</source>
 			</trans-unit>
-			<trans-unit id="tx_locallangtools_domain_model_translation.tx_locallangtools_key">
+			<trans-unit id="tx_locallangtools_domain_model_translation.key">
 				<source>Key</source>
 			</trans-unit>
 			<trans-unit id="tx_locallangtools_domain_model_translation.source">
 				<source>Source</source>
 			</trans-unit>
-			<trans-unit id="tx_locallangtools_domain_model_locallang">
-				<source>Locallang</source>
+			<trans-unit id="tx_locallangtools_domain_model_translation.target">
+				<source>Target</source>
 			</trans-unit>
-			<trans-unit id="tx_locallangtools_domain_model_locallang.tx_locallangtools_key">
-				<source>Key</source>
+			<trans-unit id="tx_locallangtools_domain_model_translation.language">
+				<source>Language</source>
 			</trans-unit>
-			<trans-unit id="tx_locallangtools_domain_model_locallang.source">
-				<source>Source</source>
+			<trans-unit id="tx_locallangtools_domain_model_translation.file" approved="yes">
+				<source>File</source>
+			</trans-unit>
+			<trans-unit id="tx_locallangtools_domain_model_translation.default" approved="yes">
+				<source>Default</source>
 			</trans-unit>
 			<trans-unit id="tx_locallangtools_domain_model_dto_translationdemand.search" approved="yes">
 				<source>Search</source>
@@ -38,6 +41,9 @@
 			</trans-unit>
 			<trans-unit id="button.submit" approved="yes">
 				<source>Submit</source>
+			</trans-unit>
+			<trans-unit id="button.update" approved="yes">
+				<source>Update</source>
 			</trans-unit>
 		</body>
 	</file>

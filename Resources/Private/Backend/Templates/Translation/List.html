@@ -7,46 +7,82 @@
 
 <f:form class="form" action="list" name="translationDemand" object="{translationDemand}" enctype="multipart/form-data">
     <div class="form-group">
-      <label class="form-label"><f:translate key="tx_locallangtools_domain_model_dto_translationdemand.search" /></label>
+      <label class="control-label"><f:translate key="tx_locallangtools_domain_model_dto_translationdemand.search" /></label>
       <f:form.textfield property="search" class="form-control" />
     </div>
     <div class="form-group">
-      <label class="form-label"><f:translate key="tx_locallangtools_domain_model_dto_translationdemand.key" /></label>
+      <label class="control-label"><f:translate key="tx_locallangtools_domain_model_dto_translationdemand.key" /></label>
       <f:form.textfield property="key" class="form-control" />
     </div>
     <div class="form-group">
-      <label class="form-label"><f:translate key="tx_locallangtools_domain_model_dto_translationdemand.language" /></label>
-      <f:form.select property="language" options="{translationDemand.languageOptions}" optionValueField="language_isocode" optionLabelField="title" multiple="multiple" />
+      <label class="control-label"><f:translate key="tx_locallangtools_domain_model_dto_translationdemand.language" /></label>
+      <f:form.select property="language" class="form-control" options="{translationDemand.languageOptions}" optionValueField="language_isocode" optionLabelField="title" />
     </div>
     <div class="form-group">
-      <label class="form-label"><f:translate key="tx_locallangtools_domain_model_dto_translationdemand.extensions" /></label>
-      <f:form.select property="extensions" options="{translationDemand.extensionsOptions}" optionValueField="key" optionLabelField="title" multiple="multiple" />
+      <label class="control-label"><f:translate key="tx_locallangtools_domain_model_dto_translationdemand.extensions" /></label>
+      <f:form.select property="extensions" class="form-control" options="{translationDemand.extensionsOptions}" optionValueField="key" optionLabelField="title" multiple="multiple" size="5" />
     </div>
     <div class="form-group">
-      <label class="form-label"><f:translate key="tx_locallangtools_domain_model_dto_translationdemand.files" /></label>
-      <f:form.select property="files" options="{translationDemand.filesOptions}" multiple="multiple" />
+      <label class="control-label"><f:translate key="tx_locallangtools_domain_model_dto_translationdemand.files" /></label>
+      <f:form.select property="files" class="form-control" options="{translationDemand.filesOptions}" multiple="multiple" size="5" />
     </div>
     <div class="form-group">
       <button class="btn btn-default"><f:translate key="button.submit" /></button>
     </div>
 </f:form>
 
+<f:form class="form" action="update" enctype="multipart/form-data">
+    <div class="form-group">
+      <label class="control-label"><f:translate key="tx_locallangtools_domain_model_translation.file" /></label>
+      <f:form.textfield property="file" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label class="control-label"><f:translate key="tx_locallangtools_domain_model_translation.key" /></label>
+      <f:form.textfield property="key" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label class="control-label"><f:translate key="tx_locallangtools_domain_model_translation.language" /></label>
+      <f:form.textfield property="language" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label class="control-label"><f:translate key="tx_locallangtools_domain_model_translation.source" /></label>
+      <f:form.textfield property="source" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label class="control-label"><f:translate key="tx_locallangtools_domain_model_translation.target" /></label>
+      <f:form.textfield property="target" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label class="control-label"><f:translate key="tx_locallangtools_domain_model_translation.default" /></label>
+      <f:form.textfield property="default" class="form-control" />
+    </div>
+    <div class="form-group">
+      <button class="btn btn-default"><f:translate key="button.update" /></button>
+    </div>
+</f:form>
 
 <f:flashMessages />
-<table  class="table table-stripped" >
-  <tr>
-    <th><f:translate key="tx_locallangtools_domain_model_translation.key" /></th>
-    <th><f:translate key="tx_locallangtools_domain_model_translation.default" /></th>
-    <th><f:translate key="tx_locallangtools_domain_model_translation.target" /></th>
-  </tr>
-
-  <f:for each="{translations}" as="translation">
-    <tr class="state-{translation.state}">
-      <td>{translation.key}</td>
-      <td>{translation.default}</td>
-      <td>{translation.target}</td>
+<div class="js-translations">
+  <table  class="table table-stripped translations" >
+    <tr>
+      <th><f:translate key="tx_locallangtools_domain_model_translation.key" /></th>
+      <th><f:translate key="tx_locallangtools_domain_model_translation.source" /></th>
+      <th><f:translate key="tx_locallangtools_domain_model_translation.target" /> ({translationDemand.language})</th>
     </tr>
-  </f:for>
-</table>
 
+    <f:for each="{translations}" as="translation">
+      <tr
+        class="state-{translation.state}"
+        data-file="{translation.file -> f:format.htmlspecialchars()}"
+        data-key="{translation.key -> f:format.htmlspecialchars()}"
+        data-language="{translation.language -> f:format.htmlspecialchars()}"
+        data-default="{translation.default -> f:format.htmlspecialchars()}"
+      >
+        <td>{translation.key}</td>
+        <td>{translation.default}</td>
+        <td class="editable">{translation.target}</td>
+      </tr>
+    </f:for>
+  </table>
+</div>
 </f:section>

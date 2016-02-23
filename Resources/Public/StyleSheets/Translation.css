@@ -1,0 +1,11 @@
+table.translations th {
+    width: 33%;
+}
+
+table.translations td {
+    width: 33%;
+    overflow: hidden;
+    word-break: break-all;
+    vertical-align: top !important;
+    text-align: left;
+}

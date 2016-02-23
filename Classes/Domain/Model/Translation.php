@@ -130,24 +130,25 @@ class Translation
         $this->key = $key;
     }
 
+
     /**
-     * Get langauge
+     * Get language
      *
      * @return string
      */
-    public function getLangauge()
+    public function getLanguage()
     {
-        return $this->langauge;
+        return $this->language;
     }
 
     /**
-     * Set langauge
+     * Set language
      *
-     * @param string $langauge
+     * @param string $language
      */
-    public function setLangauge($langauge)
+    public function setLanguage($language)
     {
-        $this->langauge = $langauge;
+        $this->language = $language;
     }
 
     /**

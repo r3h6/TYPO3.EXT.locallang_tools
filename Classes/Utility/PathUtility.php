@@ -83,12 +83,14 @@ class PathUtility
 
     public static function getLocallangPaths(array $directories = null)
     {
-        $directories = array('typo3conf/ext/', 'typo3/sysext/');
-        $directories = array('typo3conf/ext/');
+        if ($directories === null) {
+            $directories = array('typo3conf/ext/', 'typo3/sysext/');
+            $directories = array('typo3conf/ext/');
+        }
         $files = array();
         // Traverse extension locations:
         foreach ($directories as $path) {
-            $path = GeneralUtility::getFileAbsFileName(\TYPO3\CMS\Core\Utility\PathUtility::sanitizeTrailingSeparator($path));
+            $path = static::getAbsolutePath(\TYPO3\CMS\Core\Utility\PathUtility::sanitizeTrailingSeparator($path));
             if (is_dir($path)) {
                 $files = array_merge($files, GeneralUtility::getAllFilesAndFoldersInPath(array(), $path, 'xml,xlf', false, 99, 'Tests'));
             }
